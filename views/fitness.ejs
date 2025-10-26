@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= title %></title>
+  <link rel="stylesheet" href="/stylesheets/style.css">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+  <div class="container">
+    <!-- Navigation -->
+    <nav class="navbar">
+      <div class="nav-brand">
+        <i class="fas fa-dumbbell"></i>
+        <span>Fitness Tracker</span>
+      </div>
+      <div class="nav-links">
+        <a href="/" class="nav-link">
+          <i class="fas fa-home"></i> Dashboard
+        </a>
+        <a href="/fitness" class="nav-link active">
+          <i class="fas fa-running"></i> Workouts
+        </a>
+        <a href="/goals" class="nav-link">
+          <i class="fas fa-target"></i> Goals
+        </a>
+        <a href="/analytics" class="nav-link">
+          <i class="fas fa-chart-line"></i> Analytics
+        </a>
+        <a href="/share" class="nav-link">
+          <i class="fas fa-share"></i> Share
+        </a>
+      </div>
+      <div class="nav-auth">
+        <button id="loginBtn" class="btn btn-primary">Login</button>
+        <button id="signupBtn" class="btn btn-secondary">Sign Up</button>
+        <div id="userMenu" class="user-menu" style="display: none;">
+          <span id="userName"></span>
+          <button id="logoutBtn" class="btn btn-outline">Logout</button>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+      <!-- Workout Section -->
+      <section class="workout-section">
+        <div class="section-header">
+          <h1><i class="fas fa-dumbbell"></i> Workout Tracker</h1>
+          <p>Track your exercises and build your fitness routine</p>
+        </div>
+
+        <!-- Quick Add Workout -->
+        <div class="quick-add-card">
+          <h3><i class="fas fa-plus-circle"></i> Quick Add Workout</h3>
+          <form id="quickWorkoutForm" class="workout-form">
+            <div class="form-row">
+              <div class="form-group">
+                <label for="exerciseType">Exercise Type</label>
+                <select id="exerciseType" required>
+                  <option value="">Select Exercise</option>
+                  <option value="running">Running</option>
+                  <option value="cycling">Cycling</option>
+                  <option value="swimming">Swimming</option>
+                  <option value="yoga">Yoga</option>
+                  <option value="weightlifting">Weightlifting</option>
+                  <option value="walking">Walking</option>
+                  <option value="dancing">Dancing</option>
+                  <option value="basketball">Basketball</option>
+                  <option value="soccer">Soccer</option>
+                  <option value="tennis">Tennis</option>
+                  <option value="hiking">Hiking</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="intensity">Intensity</label>
+                <select id="intensity" required>
+                  <option value="">Select Intensity</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label for="duration">Duration (minutes)</label>
+                <input type="number" id="duration" min="1" max="480" required>
+              </div>
+              <div class="form-group">
+                <label for="workoutDate">Date</label>
+                <input type="date" id="workoutDate" required>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="workoutNotes">Notes (optional)</label>
+              <textarea id="workoutNotes" rows="3" placeholder="Add any notes about your workout..."></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">
+              <i class="fas fa-save"></i> Add Workout
+            </button>
+          </form>
+        </div>
+
+        <!-- Workout Suggestions -->
+        <div class="suggestions-section">
+          <h3><i class="fas fa-lightbulb"></i> Workout Suggestions</h3>
+          <div class="suggestions-grid">
+            <div class="suggestion-card" data-exercise="running">
+              <div class="suggestion-icon">
+                <i class="fas fa-running"></i>
+              </div>
+              <h4>Cardio Blast</h4>
+              <p>30-minute running session</p>
+              <div class="suggestion-details">
+                <span class="intensity">Moderate</span>
+                <span class="calories">~300 cal</span>
+              </div>
+              <button class="btn btn-outline suggestion-btn">Add to Routine</button>
+            </div>
+
+            <div class="suggestion-card" data-exercise="yoga">
+              <div class="suggestion-icon">
+                <i class="fas fa-om"></i>
+              </div>
+              <h4>Morning Yoga</h4>
+              <p>45-minute yoga flow</p>
+              <div class="suggestion-details">
+                <span class="intensity">Light</span>
+                <span class="calories">~150 cal</span>
+              </div>
+              <button class="btn btn-outline suggestion-btn">Add to Routine</button>
+            </div>
+
+            <div class="suggestion-card" data-exercise="weightlifting">
+              <div class="suggestion-icon">
+                <i class="fas fa-dumbbell"></i>
+              </div>
+              <h4>Strength Training</h4>
+              <p>60-minute weightlifting</p>
+              <div class="suggestion-details">
+                <span class="intensity">Vigorous</span>
+                <span class="calories">~400 cal</span>
+              </div>
+              <button class="btn btn-outline suggestion-btn">Add to Routine</button>
+            </div>
+
+            <div class="suggestion-card" data-exercise="cycling">
+              <div class="suggestion-icon">
+                <i class="fas fa-bicycle"></i>
+              </div>
+              <h4>Cycling Adventure</h4>
+              <p>45-minute cycling</p>
+              <div class="suggestion-details">
+                <span class="intensity">Moderate</span>
+                <span class="calories">~350 cal</span>
+              </div>
+              <button class="btn btn-outline suggestion-btn">Add to Routine</button>
+            </div>
+
+            <div class="suggestion-card" data-exercise="swimming">
+              <div class="suggestion-icon">
+                <i class="fas fa-swimmer"></i>
+              </div>
+              <h4>Swimming Session</h4>
+              <p>40-minute swimming</p>
+              <div class="suggestion-details">
+                <span class="intensity">Moderate</span>
+                <span class="calories">~320 cal</span>
+              </div>
+              <button class="btn btn-outline suggestion-btn">Add to Routine</button>
+            </div>
+
+            <div class="suggestion-card" data-exercise="hiking">
+              <div class="suggestion-icon">
+                <i class="fas fa-hiking"></i>
+              </div>
+              <h4>Nature Hike</h4>
+              <p>90-minute hiking</p>
+              <div class="suggestion-details">
+                <span class="intensity">Moderate</span>
+                <span class="calories">~500 cal</span>
+              </div>
+              <button class="btn btn-outline suggestion-btn">Add to Routine</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Recent Workouts -->
+        <div class="recent-workouts">
+          <h3><i class="fas fa-history"></i> Recent Workouts</h3>
+          <div id="recentWorkoutsList" class="workouts-list">
+            <div class="loading">
+              <div class="spinner"></div>
+              <p>Loading workouts...</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Workout Statistics -->
+        <div class="workout-stats">
+          <h3><i class="fas fa-chart-bar"></i> This Week's Stats</h3>
+          <div class="stats-grid">
+            <div class="stat-item">
+              <div class="stat-icon">
+                <i class="fas fa-fire"></i>
+              </div>
+              <div class="stat-content">
+                <h4 id="weeklyCalories">0</h4>
+                <p>Calories Burned</p>
+              </div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-icon">
+                <i class="fas fa-clock"></i>
+              </div>
+              <div class="stat-content">
+                <h4 id="weeklyDuration">0 min</h4>
+                <p>Total Duration</p>
+              </div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-icon">
+                <i class="fas fa-dumbbell"></i>
+              </div>
+              <div class="stat-content">
+                <h4 id="weeklyWorkouts">0</h4>
+                <p>Workouts</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <!-- Auth Modals -->
+  <div id="authModal" class="modal">
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <div id="authContent">
+        <!-- Auth forms will be loaded here -->
+      </div>
+    </div>
+  </div>
+
+  <script src="/javascripts/app.js"></script>
+  <script src="/javascripts/fitness.js"></script>
+</body>
+</html>

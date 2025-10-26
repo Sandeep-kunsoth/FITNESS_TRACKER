@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= title %></title>
+  <link rel="stylesheet" href="/stylesheets/style.css">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+  <div class="container">
+    <!-- Navigation -->
+    <nav class="navbar">
+      <div class="nav-brand">
+        <i class="fas fa-dumbbell"></i>
+        <span>Fitness Tracker</span>
+      </div>
+      <div class="nav-links">
+        <a href="/" class="nav-link active">
+          <i class="fas fa-home"></i> Dashboard
+        </a>
+        <a href="/fitness" class="nav-link">
+          <i class="fas fa-running"></i> Workouts
+        </a>
+        <a href="/goals" class="nav-link">
+          <i class="fas fa-target"></i> Goals
+        </a>
+        <a href="/analytics" class="nav-link">
+          <i class="fas fa-chart-line"></i> Analytics
+        </a>
+        <a href="/share" class="nav-link">
+          <i class="fas fa-share"></i> Share
+        </a>
+      </div>
+      <div class="nav-auth">
+        <button id="loginBtn" class="btn btn-primary">Login</button>
+        <button id="signupBtn" class="btn btn-secondary">Sign Up</button>
+        <div id="userMenu" class="user-menu" style="display: none;">
+          <span id="userName"></span>
+          <button id="logoutBtn" class="btn btn-outline">Logout</button>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+      <!-- Welcome Section -->
+      <section class="welcome-section" id="welcomeSection">
+        <div class="welcome-content">
+          <h1>Welcome to Fitness Tracker</h1>
+          <p>Track your fitness journey, monitor your progress, and achieve your health goals with our comprehensive fitness tracking platform.</p>
+          <div class="feature-grid">
+            <div class="feature-card">
+              <i class="fas fa-dumbbell"></i>
+              <h3>Workout Tracking</h3>
+              <p>Log your exercises, track calories burned, and monitor your fitness activities.</p>
+            </div>
+            <div class="feature-card">
+              <i class="fas fa-utensils"></i>
+              <h3>Nutrition Tracking</h3>
+              <p>Monitor your daily meals, track macronutrients, and maintain a balanced diet.</p>
+            </div>
+            <div class="feature-card">
+              <i class="fas fa-bed"></i>
+              <h3>Sleep Monitoring</h3>
+              <p>Track your sleep patterns and quality to optimize your recovery.</p>
+            </div>
+            <div class="feature-card">
+              <i class="fas fa-chart-line"></i>
+              <h3>Progress Analytics</h3>
+              <p>Visualize your progress with detailed charts and comprehensive analytics.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Dashboard Section -->
+      <section class="dashboard-section" id="dashboardSection" style="display: none;">
+        <div class="dashboard-header">
+          <h1>Dashboard</h1>
+          <div class="date-selector">
+            <input type="date" id="datePicker" class="date-input">
+          </div>
+        </div>
+
+        <!-- Stats Cards -->
+        <div class="stats-grid">
+          <div class="stat-card">
+            <div class="stat-icon">
+              <i class="fas fa-fire"></i>
+            </div>
+            <div class="stat-content">
+              <h3 id="caloriesBurned">0</h3>
+              <p>Calories Burned</p>
+            </div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon">
+              <i class="fas fa-utensils"></i>
+            </div>
+            <div class="stat-content">
+              <h3 id="caloriesConsumed">0</h3>
+              <p>Calories Consumed</p>
+            </div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon">
+              <i class="fas fa-clock"></i>
+            </div>
+            <div class="stat-content">
+              <h3 id="workoutTime">0 min</h3>
+              <p>Workout Time</p>
+            </div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon">
+              <i class="fas fa-bed"></i>
+            </div>
+            <div class="stat-content">
+              <h3 id="sleepTime">0 hrs</h3>
+              <p>Sleep Duration</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Charts Section -->
+        <div class="charts-grid">
+          <div class="chart-card">
+            <h3>Weight Progress</h3>
+            <canvas id="weightChart"></canvas>
+          </div>
+          <div class="chart-card">
+            <h3>Weekly Calorie Balance</h3>
+            <canvas id="calorieChart"></canvas>
+          </div>
+        </div>
+
+        <!-- Recent Activities -->
+        <div class="activities-section">
+          <div class="activity-card">
+            <h3>Recent Workouts</h3>
+            <div id="recentWorkouts" class="activity-list">
+              <!-- Workouts will be loaded here -->
+            </div>
+          </div>
+          <div class="activity-card">
+            <h3>Recent Meals</h3>
+            <div id="recentMeals" class="activity-list">
+              <!-- Meals will be loaded here -->
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <!-- Auth Modals -->
+  <div id="authModal" class="modal">
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <div id="authContent">
+        <!-- Auth forms will be loaded here -->
+      </div>
+    </div>
+  </div>
+
+  <script src="/javascripts/app.js"></script>
+</body>
+</html>

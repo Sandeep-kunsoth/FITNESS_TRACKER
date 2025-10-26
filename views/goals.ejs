@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= title %></title>
+  <link rel="stylesheet" href="/stylesheets/style.css">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+  <div class="container">
+    <!-- Navigation -->
+    <nav class="navbar">
+      <div class="nav-brand">
+        <i class="fas fa-dumbbell"></i>
+        <span>Fitness Tracker</span>
+      </div>
+      <div class="nav-links">
+        <a href="/" class="nav-link">
+          <i class="fas fa-home"></i> Dashboard
+        </a>
+        <a href="/fitness" class="nav-link">
+          <i class="fas fa-running"></i> Workouts
+        </a>
+        <a href="/goals" class="nav-link active">
+          <i class="fas fa-target"></i> Goals
+        </a>
+        <a href="/analytics" class="nav-link">
+          <i class="fas fa-chart-line"></i> Analytics
+        </a>
+        <a href="/share" class="nav-link">
+          <i class="fas fa-share"></i> Share
+        </a>
+      </div>
+      <div class="nav-auth">
+        <button id="loginBtn" class="btn btn-primary">Login</button>
+        <button id="signupBtn" class="btn btn-secondary">Sign Up</button>
+        <div id="userMenu" class="user-menu" style="display: none;">
+          <span id="userName"></span>
+          <button id="logoutBtn" class="btn btn-outline">Logout</button>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+      <!-- Goals Section -->
+      <section class="goals-section">
+        <div class="section-header">
+          <h1><i class="fas fa-target"></i> Fitness Goals</h1>
+          <p>Set and track your fitness objectives to stay motivated</p>
+        </div>
+
+        <!-- Current Goals Overview -->
+        <div class="goals-overview">
+          <h3><i class="fas fa-chart-pie"></i> Current Goals Progress</h3>
+          <div class="goals-grid">
+            <div class="goal-card">
+              <div class="goal-icon">
+                <i class="fas fa-weight"></i>
+              </div>
+              <div class="goal-content">
+                <h4>Weight Goal</h4>
+                <div class="goal-progress">
+                  <div class="progress-bar">
+                    <div class="progress-fill" style="width: 65%"></div>
+                  </div>
+                  <span class="progress-text">65% Complete</span>
+                </div>
+                <p>Target: 70kg | Current: 75kg</p>
+              </div>
+            </div>
+
+            <div class="goal-card">
+              <div class="goal-icon">
+                <i class="fas fa-fire"></i>
+              </div>
+              <div class="goal-content">
+                <h4>Calorie Burn</h4>
+                <div class="goal-progress">
+                  <div class="progress-bar">
+                    <div class="progress-fill" style="width: 80%"></div>
+                  </div>
+                  <span class="progress-text">80% Complete</span>
+                </div>
+                <p>Target: 2000 cal/week | Current: 1600 cal</p>
+              </div>
+            </div>
+
+            <div class="goal-card">
+              <div class="goal-icon">
+                <i class="fas fa-clock"></i>
+              </div>
+              <div class="goal-content">
+                <h4>Workout Time</h4>
+                <div class="goal-progress">
+                  <div class="progress-bar">
+                    <div class="progress-fill" style="width: 90%"></div>
+                  </div>
+                  <span class="progress-text">90% Complete</span>
+                </div>
+                <p>Target: 300 min/week | Current: 270 min</p>
+              </div>
+            </div>
+
+            <div class="goal-card">
+              <div class="goal-icon">
+                <i class="fas fa-bed"></i>
+              </div>
+              <div class="goal-content">
+                <h4>Sleep Goal</h4>
+                <div class="goal-progress">
+                  <div class="progress-bar">
+                    <div class="progress-fill" style="width: 70%"></div>
+                  </div>
+                  <span class="progress-text">70% Complete</span>
+                </div>
+                <p>Target: 8 hrs/night | Current: 7.2 hrs</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Set New Goals -->
+        <div class="set-goals-card">
+          <h3><i class="fas fa-plus-circle"></i> Set New Goals</h3>
+          <form id="goalForm" class="goal-form">
+            <div class="form-row">
+              <div class="form-group">
+                <label for="goalType">Goal Type</label>
+                <select id="goalType" required>
+                  <option value="">Select Goal Type</option>
+                  <option value="weight">Weight Loss/Gain</option>
+                  <option value="calories">Calorie Burn</option>
+                  <option value="workout_time">Workout Time</option>
+                  <option value="sleep">Sleep Duration</option>
+                  <option value="steps">Daily Steps</option>
+                  <option value="water">Water Intake</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="goalTarget">Target Value</label>
+                <input type="number" id="goalTarget" step="0.1" required>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label for="goalUnit">Unit</label>
+                <select id="goalUnit" required>
+                  <option value="">Select Unit</option>
+                  <option value="kg">Kilograms (kg)</option>
+                  <option value="lbs">Pounds (lbs)</option>
+                  <option value="calories">Calories</option>
+                  <option value="minutes">Minutes</option>
+                  <option value="hours">Hours</option>
+                  <option value="steps">Steps</option>
+                  <option value="liters">Liters</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="goalDeadline">Target Date</label>
+                <input type="date" id="goalDeadline" required>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="goalDescription">Description</label>
+              <textarea id="goalDescription" rows="3" placeholder="Describe your goal and motivation..."></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">
+              <i class="fas fa-save"></i> Set Goal
+            </button>
+          </form>
+        </div>
+
+        <!-- Goal Templates -->
+        <div class="goal-templates">
+          <h3><i class="fas fa-lightbulb"></i> Popular Goal Templates</h3>
+          <div class="templates-grid">
+            <div class="template-card" data-goal="weight_loss">
+              <div class="template-icon">
+                <i class="fas fa-weight-hanging"></i>
+              </div>
+              <h4>Weight Loss</h4>
+              <p>Lose 1-2 kg per month</p>
+              <div class="template-details">
+                <span class="duration">3 months</span>
+                <span class="difficulty">Moderate</span>
+              </div>
+              <button class="btn btn-outline template-btn">Use Template</button>
+            </div>
+
+            <div class="template-card" data-goal="muscle_gain">
+              <div class="template-icon">
+                <i class="fas fa-dumbbell"></i>
+              </div>
+              <h4>Muscle Building</h4>
+              <p>Strength training 3x per week</p>
+              <div class="template-details">
+                <span class="duration">6 months</span>
+                <span class="difficulty">Hard</span>
+              </div>
+              <button class="btn btn-outline template-btn">Use Template</button>
+            </div>
+
+            <div class="template-card" data-goal="cardio_fitness">
+              <div class="template-icon">
+                <i class="fas fa-heartbeat"></i>
+              </div>
+              <h4>Cardio Fitness</h4>
+              <p>30 minutes cardio daily</p>
+              <div class="template-details">
+                <span class="duration">2 months</span>
+                <span class="difficulty">Easy</span>
+              </div>
+              <button class="btn btn-outline template-btn">Use Template</button>
+            </div>
+
+            <div class="template-card" data-goal="flexibility">
+              <div class="template-icon">
+                <i class="fas fa-om"></i>
+              </div>
+              <h4>Flexibility</h4>
+              <p>Daily stretching routine</p>
+              <div class="template-details">
+                <span class="duration">1 month</span>
+                <span class="difficulty">Easy</span>
+              </div>
+              <button class="btn btn-outline template-btn">Use Template</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Goal History -->
+        <div class="goal-history">
+          <h3><i class="fas fa-history"></i> Goal History</h3>
+          <div id="goalHistoryList" class="history-list">
+            <div class="loading">
+              <div class="spinner"></div>
+              <p>Loading goal history...</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Motivation Section -->
+        <div class="motivation-section">
+          <h3><i class="fas fa-quote-left"></i> Daily Motivation</h3>
+          <div class="motivation-card">
+            <blockquote id="dailyQuote">
+              "The only bad workout is the one that didn't happen."
+            </blockquote>
+            <cite>- Fitness Motivation</cite>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <!-- Auth Modals -->
+  <div id="authModal" class="modal">
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <div id="authContent">
+        <!-- Auth forms will be loaded here -->
+      </div>
+    </div>
+  </div>
+
+  <script src="/javascripts/app.js"></script>
+  <script src="/javascripts/goals.js"></script>
+</body>
+</html>

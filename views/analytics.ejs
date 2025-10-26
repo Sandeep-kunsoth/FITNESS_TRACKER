@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= title %></title>
+  <link rel="stylesheet" href="/stylesheets/style.css">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+  <div class="container">
+    <!-- Navigation -->
+    <nav class="navbar">
+      <div class="nav-brand">
+        <i class="fas fa-dumbbell"></i>
+        <span>Fitness Tracker</span>
+      </div>
+      <div class="nav-links">
+        <a href="/" class="nav-link">
+          <i class="fas fa-home"></i> Dashboard
+        </a>
+        <a href="/fitness" class="nav-link">
+          <i class="fas fa-running"></i> Workouts
+        </a>
+        <a href="/goals" class="nav-link">
+          <i class="fas fa-target"></i> Goals
+        </a>
+        <a href="/analytics" class="nav-link active">
+          <i class="fas fa-chart-line"></i> Analytics
+        </a>
+        <a href="/share" class="nav-link">
+          <i class="fas fa-share"></i> Share
+        </a>
+      </div>
+      <div class="nav-auth">
+        <button id="loginBtn" class="btn btn-primary">Login</button>
+        <button id="signupBtn" class="btn btn-secondary">Sign Up</button>
+        <div id="userMenu" class="user-menu" style="display: none;">
+          <span id="userName"></span>
+          <button id="logoutBtn" class="btn btn-outline">Logout</button>
+        </div>
+      </div>
+  </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+      <!-- Analytics Section -->
+      <section class="analytics-section">
+        <div class="section-header">
+          <h1><i class="fas fa-chart-line"></i> Analytics Dashboard</h1>
+          <p>Comprehensive insights into your fitness journey</p>
+        </div>
+
+        <!-- Time Period Selector -->
+        <div class="time-selector">
+          <h3>Select Time Period</h3>
+          <div class="period-buttons">
+            <button class="period-btn active" data-period="week">Week</button>
+            <button class="period-btn" data-period="month">Month</button>
+            <button class="period-btn" data-period="year">Year</button>
+            <button class="period-btn" data-period="all">All Time</button>
+          </div>
+        </div>
+
+        <!-- Key Metrics -->
+        <div class="metrics-overview">
+          <h3><i class="fas fa-tachometer-alt"></i> Key Metrics</h3>
+          <div class="metrics-grid">
+            <div class="metric-card">
+              <div class="metric-icon">
+                <i class="fas fa-fire"></i>
+              </div>
+              <div class="metric-content">
+                <h4 id="totalCaloriesBurned">0</h4>
+                <p>Total Calories Burned</p>
+                <span class="metric-change positive">+12%</span>
+              </div>
+            </div>
+
+            <div class="metric-card">
+              <div class="metric-icon">
+                <i class="fas fa-clock"></i>
+              </div>
+              <div class="metric-content">
+                <h4 id="totalWorkoutTime">0 hrs</h4>
+                <p>Total Workout Time</p>
+                <span class="metric-change positive">+8%</span>
+              </div>
+            </div>
+
+            <div class="metric-card">
+              <div class="metric-icon">
+                <i class="fas fa-dumbbell"></i>
+              </div>
+              <div class="metric-content">
+                <h4 id="totalWorkouts">0</h4>
+                <p>Total Workouts</p>
+                <span class="metric-change positive">+15%</span>
+              </div>
+            </div>
+
+            <div class="metric-card">
+              <div class="metric-icon">
+                <i class="fas fa-weight"></i>
+              </div>
+              <div class="metric-content">
+                <h4 id="weightChange">0 kg</h4>
+                <p>Weight Change</p>
+                <span class="metric-change negative">-2.5%</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Charts Section -->
+        <div class="charts-section">
+          <div class="chart-container">
+            <div class="chart-card">
+              <h3><i class="fas fa-chart-area"></i> Workout Activity Over Time</h3>
+              <canvas id="workoutActivityChart"></canvas>
+            </div>
+
+            <div class="chart-card">
+              <h3><i class="fas fa-chart-pie"></i> Exercise Type Distribution</h3>
+              <canvas id="exerciseTypeChart"></canvas>
+            </div>
+
+            <div class="chart-card">
+              <h3><i class="fas fa-chart-bar"></i> Weekly Calorie Balance</h3>
+              <canvas id="calorieBalanceChart"></canvas>
+            </div>
+
+            <div class="chart-card">
+              <h3><i class="fas fa-chart-line"></i> Weight Progress</h3>
+              <canvas id="weightProgressChart"></canvas>
+            </div>
+          </div>
+        </div>
+
+        <!-- Detailed Analytics -->
+        <div class="detailed-analytics">
+          <div class="analytics-tabs">
+            <button class="tab-btn active" data-tab="workouts">Workouts</button>
+            <button class="tab-btn" data-tab="nutrition">Nutrition</button>
+            <button class="tab-btn" data-tab="sleep">Sleep</button>
+            <button class="tab-btn" data-tab="progress">Progress</button>
+          </div>
+
+          <div class="tab-content">
+            <!-- Workouts Tab -->
+            <div class="tab-panel active" id="workouts-tab">
+              <h3>Workout Analytics</h3>
+              <div class="analytics-grid">
+                <div class="analytics-card">
+                  <h4>Most Popular Exercise</h4>
+                  <div class="analytics-item">
+                    <span class="exercise-name">Running</span>
+                    <span class="exercise-count">15 sessions</span>
+                  </div>
+                </div>
+                <div class="analytics-card">
+                  <h4>Average Workout Duration</h4>
+                  <div class="analytics-value">45 minutes</div>
+                </div>
+                <div class="analytics-card">
+                  <h4>Best Workout Day</h4>
+                  <div class="analytics-value">Tuesday</div>
+                </div>
+                <div class="analytics-card">
+                  <h4>Calories per Workout</h4>
+                  <div class="analytics-value">320 cal</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Nutrition Tab -->
+            <div class="tab-panel" id="nutrition-tab">
+              <h3>Nutrition Analytics</h3>
+              <div class="analytics-grid">
+                <div class="analytics-card">
+                  <h4>Average Daily Calories</h4>
+                  <div class="analytics-value">2,150 cal</div>
+                </div>
+                <div class="analytics-card">
+                  <h4>Macro Distribution</h4>
+                  <div class="macro-breakdown">
+                    <div class="macro-item">
+                      <span class="macro-name">Protein</span>
+                      <span class="macro-percentage">25%</span>
+                    </div>
+                    <div class="macro-item">
+                      <span class="macro-name">Carbs</span>
+                      <span class="macro-percentage">45%</span>
+                    </div>
+                    <div class="macro-item">
+                      <span class="macro-name">Fat</span>
+                      <span class="macro-percentage">30%</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="analytics-card">
+                  <h4>Most Eaten Food</h4>
+                  <div class="analytics-value">Chicken Breast</div>
+                </div>
+                <div class="analytics-card">
+                  <h4>Average Meal Count</h4>
+                  <div class="analytics-value">3.2 meals/day</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Sleep Tab -->
+            <div class="tab-panel" id="sleep-tab">
+              <h3>Sleep Analytics</h3>
+              <div class="analytics-grid">
+                <div class="analytics-card">
+                  <h4>Average Sleep Duration</h4>
+                  <div class="analytics-value">7.5 hours</div>
+                </div>
+                <div class="analytics-card">
+                  <h4>Sleep Quality Score</h4>
+                  <div class="analytics-value">8.2/10</div>
+                </div>
+                <div class="analytics-card">
+                  <h4>Best Sleep Day</h4>
+                  <div class="analytics-value">Saturday</div>
+                </div>
+                <div class="analytics-card">
+                  <h4>Sleep Consistency</h4>
+                  <div class="analytics-value">85%</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Progress Tab -->
+            <div class="tab-panel" id="progress-tab">
+              <h3>Progress Analytics</h3>
+              <div class="analytics-grid">
+                <div class="analytics-card">
+                  <h4>BMI Change</h4>
+                  <div class="analytics-value">-0.8</div>
+                </div>
+                <div class="analytics-card">
+                  <h4>Body Fat Change</h4>
+                  <div class="analytics-value">-2.1%</div>
+                </div>
+                <div class="analytics-card">
+                  <h4>Muscle Mass Change</h4>
+                  <div class="analytics-value">+1.2 kg</div>
+                </div>
+                <div class="analytics-card">
+                  <h4>Goal Achievement Rate</h4>
+                  <div class="analytics-value">78%</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Insights and Recommendations -->
+        <div class="insights-section">
+          <h3><i class="fas fa-lightbulb"></i> Insights & Recommendations</h3>
+          <div class="insights-grid">
+            <div class="insight-card positive">
+              <div class="insight-icon">
+                <i class="fas fa-thumbs-up"></i>
+              </div>
+              <div class="insight-content">
+                <h4>Great Progress!</h4>
+                <p>You've consistently worked out 4 times this week. Keep up the excellent work!</p>
+              </div>
+            </div>
+
+            <div class="insight-card warning">
+              <div class="insight-icon">
+                <i class="fas fa-exclamation-triangle"></i>
+              </div>
+              <div class="insight-content">
+                <h4>Sleep Improvement Needed</h4>
+                <p>Your sleep duration has decreased by 30 minutes this week. Try to maintain 7-8 hours.</p>
+              </div>
+            </div>
+
+            <div class="insight-card info">
+              <div class="insight-icon">
+                <i class="fas fa-info-circle"></i>
+              </div>
+              <div class="insight-content">
+                <h4>Nutrition Tip</h4>
+                <p>Consider increasing your protein intake to support muscle recovery after workouts.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Export Data -->
+        <div class="export-section">
+          <h3><i class="fas fa-download"></i> Export Your Data</h3>
+          <div class="export-options">
+            <button class="btn btn-outline" id="exportCSV">
+              <i class="fas fa-file-csv"></i> Export as CSV
+            </button>
+            <button class="btn btn-outline" id="exportPDF">
+              <i class="fas fa-file-pdf"></i> Export as PDF
+            </button>
+            <button class="btn btn-outline" id="exportJSON">
+              <i class="fas fa-file-code"></i> Export as JSON
+            </button>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <!-- Auth Modals -->
+  <div id="authModal" class="modal">
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <div id="authContent">
+        <!-- Auth forms will be loaded here -->
+      </div>
+    </div>
+  </div>
+
+  <script src="/javascripts/app.js"></script>
+  <script src="/javascripts/analytics.js"></script>
+</body>
+</html>
